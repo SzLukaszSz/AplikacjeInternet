@@ -2,6 +2,10 @@ package com.packt.webstore.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+
+import org.springframework.context.annotation.EnableLoadTimeWeaving;
+
 public class Address implements Serializable{
 
 	private static final long serialVersionUID = -530086768384258062L;
