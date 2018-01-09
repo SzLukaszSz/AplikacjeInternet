@@ -19,6 +19,10 @@ public class ProductIdValidator implements ConstraintValidator<ProductId, String
 	}
 
 	public boolean isValid(String value, ConstraintValidatorContext context) {
+		if(productService == null) {
+			return true;
+		}
+		
 		Product product;
 		try {
 			product = productService.getProductById(value);

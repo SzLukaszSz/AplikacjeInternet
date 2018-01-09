@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.packt.webstore.domain.Product;
 
-public interface ProductRepository {
+public interface ProductRepository extends AbstractDao {
 
 	List <Product> getAllProducts();
 	

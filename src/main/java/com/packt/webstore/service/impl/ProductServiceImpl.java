@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.domain.repository.ProductRepository;
@@ -33,6 +34,7 @@ public class ProductServiceImpl implements ProductService{
 		return productRepository.getProductsByFilter(filterParams);
 	}
 	
+	@Transactional
 	public void addProduct(Product product) {
 		   productRepository.addProduct(product);
 	}

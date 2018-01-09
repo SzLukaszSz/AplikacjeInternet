@@ -3,6 +3,10 @@ package com.packt.webstore.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -17,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.packt.webstore.validator.ProductId;
 
 @XmlRootElement	
-
+@Entity
 public class Product implements Serializable {
 
 	/**
@@ -27,23 +31,35 @@ public class Product implements Serializable {
 
 	@Pattern(regexp="P[0-9]+", message="{Pattern.Product.productId.validation}")
 	@ProductId
+	@Id
+	@Column(name = "PRODUCT_ID")
 	private String productId;
 	
 	@Size(min=4, max=50, message="{Size.Product.name.validation}")
+	@Column(name = "NAME")
 	private String name;
 	
 	@Min(value=0, message="Min.Product.unitPrice.validation}")
 	@Digits(integer=8, fraction=2, message="{Digits.Product.unitPrice.validation}")
 	@NotNull(message= "{NotNull.Product.unitPrice.validation}")
+	@Column(name = "UNIT_PRICE")
 	private BigDecimal unitPrice;
+	@Column(name = "DESCRIPTION")
 	private String description;
+	@Column(name = "MANUFACTURER")
 	private String manufacturer;
+	@Column(name = "CATEGORY")
 	private String category;
+	@Column(name = "UNITS_IN_STOCK")
 	private long unitsInStock;
+	@Column(name = "UNITS_IN_ORDER")
 	private long unitsInOrder;
+	@Column(name = "DISCONTINUED")
 	private boolean discontinued;
+	@Column(name = "CONDITION")
 	private String condition;
 	@JsonIgnore
+	@Transient
 	private MultipartFile productImage;
 	
 
