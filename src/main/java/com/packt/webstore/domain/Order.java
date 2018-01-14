@@ -2,6 +2,8 @@ package com.packt.webstore.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+
 public class Order  implements Serializable{
 
 	private static final long serialVersionUID = -3560539622417210365L;

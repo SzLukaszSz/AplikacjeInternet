@@ -3,18 +3,38 @@ package com.packt.webstore.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "CART")
 public class Cart implements Serializable{
 
 	private static final long serialVersionUID = -4045729241960416615L;
-	
+	@Id
+	@Column(name = "CART_ID")
 	private String cartId;
-	private Map<String,CartItem> cartItems;
+	@OneToMany(mappedBy="cart")
+	private Set<CartItem> cartItems;
+	@Column(name = "GRAND_TOTAL")
 	private BigDecimal grandTotal;
 	
 	public Cart() {
-		cartItems = new HashMap<String, CartItem>();
+		cartItems = new HashSet<CartItem>();
 		grandTotal = new BigDecimal(0);
 	}
 	
@@ -31,11 +51,11 @@ public class Cart implements Serializable{
 		this.cartId = cartId;
 	}
 
-	public Map<String, CartItem> getCartItems() {
+	public Set<CartItem> getCartItems() {
 		return cartItems;
 	}
 
-	public void setCartItems(Map<String, CartItem> cartItems) {
+	public void setCartItems(Set<CartItem> cartItems) {
 		this.cartItems = cartItems;
 	}
 
@@ -44,27 +64,24 @@ public class Cart implements Serializable{
 	}
 	
 	public void addCartItem(CartItem item) {
-		String productId = item.getProduct().getProductId();
-		
-		if(cartItems.containsKey(productId)) {
-			CartItem existingCartItem = cartItems.get(productId);
+		item.setCart(this);
+		if(cartItems.contains(item)) {
+			CartItem existingCartItem = cartItems.stream().filter(i -> i.equals(item)).findFirst().get();
 			existingCartItem.setQuantity(existingCartItem.getQuantity()+ item.getQuantity());
-			cartItems.put(productId, existingCartItem);
 		} else {
-			cartItems.put(productId, item);
+			cartItems.add(item);
 		}
 		updateGrandTotal();
 	}
 	
 	public void removeCartItem(CartItem item) {
-		String productId = item.getProduct().getProductId();
-		cartItems.remove(productId);
+		cartItems.remove(item);
 		updateGrandTotal();
 	}
 	
 	public void updateGrandTotal() {
 		grandTotal= new BigDecimal(0);
-		for(CartItem item : cartItems.values()){
+		for(CartItem item : cartItems){
 			grandTotal = grandTotal.add(item.getTotalPrice());
 		}
 	}

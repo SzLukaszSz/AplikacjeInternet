@@ -3,12 +3,40 @@ package com.packt.webstore.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "CART_ITEM")
 public class CartItem implements Serializable{
 
 	private static final long serialVersionUID = -4314427089896169685L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="CART_ITEM_ID")
+	private Integer cartItemId;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "CART_ID")
+	private Cart cart;
+	@OneToOne
+	@JoinColumn(name = "PRODUCT_ID")
 	private Product product;
-	private int quantity;
+	@Column(name = "QUANTITY")
+	private Integer quantity;
+	@Column(name = "TOTAL_PRICE")
 	private BigDecimal totalPrice;
 	
 	public CartItem() {
@@ -31,6 +59,14 @@ public class CartItem implements Serializable{
 		this.updateTotalPrice();
 	}
 	
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+
 	public int getQuantity() {
 		return quantity;
 	}

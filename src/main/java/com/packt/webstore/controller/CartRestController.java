@@ -36,6 +36,7 @@ public class CartRestController {
 
 	@RequestMapping(value = "/{cartId}", method = RequestMethod.GET)
 	public @ResponseBody Cart read(@PathVariable(value = "cartId") String cartId) {
+		Cart read = cartService.read(cartId);
 		return cartService.read(cartId);
 	}
 

@@ -13,7 +13,6 @@ import com.packt.webstore.domain.Product;
 import com.packt.webstore.domain.repository.ProductRepository;
 import com.packt.webstore.exception.ProductNotFoundException;
 
-@Repository
 public class InMemoryProductRepository implements ProductRepository{
 	
 private List<Product> listOfProducts = new ArrayList<Product>();
