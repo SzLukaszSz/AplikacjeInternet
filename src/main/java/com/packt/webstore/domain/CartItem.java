@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +19,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 @Table(name = "CART_ITEM")
 public class CartItem implements Serializable{
@@ -28,8 +31,9 @@ public class CartItem implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="CART_ITEM_ID")
 	private Integer cartItemId;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CART_ID")
+	@JsonIgnore
 	private Cart cart;
 	@OneToOne
 	@JoinColumn(name = "PRODUCT_ID")

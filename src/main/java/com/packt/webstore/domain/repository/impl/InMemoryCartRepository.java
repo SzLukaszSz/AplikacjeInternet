@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.packt.webstore.domain.Cart;
 import com.packt.webstore.domain.repository.CartRepository;
 
-@Repository
 public class InMemoryCartRepository implements CartRepository{
 	
 	private Map<String, Cart> listOfCarts;
