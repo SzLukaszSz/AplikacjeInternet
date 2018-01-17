@@ -3,6 +3,7 @@ package com.packt.webstore.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.packt.webstore.domain.CartItem;
 import com.packt.webstore.domain.Order;
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.domain.repository.OrderRepository;
@@ -18,24 +19,23 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Autowired
 	private OrderRepository orderRepository;
-	
-	@Autowired
-	private CartService cartService;
 
 	
-	public void processOrder(String productId, long quantity) {
-		Product productById = productRepository.getProductById(productId);
+	public void processOrder(Product product, long quantity) {
 		
-		if(productById.getUnitsInStock() < quantity){
-			throw new IllegalArgumentException("Out of Stock. Available Units in stock"+ productById.getUnitsInStock());
+		if(product.getUnitsInStock() < quantity){
+			throw new IllegalArgumentException("Out of Stock. Available Units in stock"+ product.getUnitsInStock());
 		}
 		
-		productById.setUnitsInStock(productById.getUnitsInStock() - quantity);
+		product.setUnitsInStock(product.getUnitsInStock() - quantity);
+		productRepository.updateProduct(product);
 	}
 	
-	public Long saveOrder(Order order) {
-		Long orderId = orderRepository.saveOrder(order);
-		cartService.delete(order.getCart().getCartId());
+	public Integer saveOrder(Order order) {
+		Integer orderId = orderRepository.saveOrder(order);
+		for (CartItem cartItem : order.getCart().getCartItems()) {
+			processOrder(cartItem.getProduct(), cartItem.getQuantity());
+		}
 		return orderId;
 	}
 

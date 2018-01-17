@@ -6,24 +6,23 @@ import org.springframework.stereotype.Repository;
 import com.packt.webstore.domain.Order;
 import com.packt.webstore.domain.repository.OrderRepository;
 
-@Repository
 public class InMemoryOrderRepositoryImpl implements OrderRepository{
 
-	private Map<Long, Order> listOfOrders;
-	private long nextOrderId;
+	private Map<Integer, Order> listOfOrders;
+	private Integer nextOrderId;
 	
 	public InMemoryOrderRepositoryImpl() {
-		listOfOrders = new HashMap<Long, Order>();
+		listOfOrders = new HashMap<Integer, Order>();
 		nextOrderId = 1000;
 	}
 
-	public Long saveOrder(Order order) {
+	public Integer saveOrder(Order order) {
 		order.setOrderId(getNextOrderId());
 		listOfOrders.put(order.getOrderId(), order);
 		return order.getOrderId();
 	}
 
-	private synchronized long getNextOrderId() {
+	private synchronized Integer getNextOrderId() {
 		return nextOrderId++;
 	}
 }

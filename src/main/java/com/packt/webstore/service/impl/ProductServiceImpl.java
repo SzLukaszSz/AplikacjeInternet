@@ -34,9 +34,13 @@ public class ProductServiceImpl implements ProductService{
 		return productRepository.getProductsByFilter(filterParams);
 	}
 	
-	@Transactional
 	public void addProduct(Product product) {
 		   productRepository.addProduct(product);
+	}
+	
+	@Override
+	public void updateProduct(Product product) {
+		   productRepository.updateProduct(product);
 	}
 
 }

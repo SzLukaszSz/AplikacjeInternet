@@ -5,6 +5,10 @@
 		<class>com.packt.webstore.domain.Product</class>
 		<class>com.packt.webstore.domain.Cart</class>
 		<class>com.packt.webstore.domain.CartItem</class>
+		<class>com.packt.webstore.domain.Address</class>
+		<class>com.packt.webstore.domain.Customer</class>
+		<class>com.packt.webstore.domain.Order</class>
+		<class>com.packt.webstore.domain.ShippingDetail</class>
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 	</persistence-unit>

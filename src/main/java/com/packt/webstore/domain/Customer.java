@@ -2,13 +2,31 @@ package com.packt.webstore.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "CUSTOMER")
 public class Customer implements Serializable{
 
 	private static final long serialVersionUID = 2284040482222162898L;
 	
+	@Id
+	@Column(name="CUSTOMER_ID")
 	private String customerId;
+	@Column(name="NAME")
 	private String name;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ADDRESS_ID")
 	private Address billingAddress;
+	@Column(name="PHONE_NUMBER")
 	private String phoneNumber;
 	
 	public Customer() {

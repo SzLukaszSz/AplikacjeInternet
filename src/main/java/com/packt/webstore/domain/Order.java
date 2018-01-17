@@ -2,15 +2,35 @@ package com.packt.webstore.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "ORDER_CONFIRMATION")
 public class Order  implements Serializable{
 
 	private static final long serialVersionUID = -3560539622417210365L;
 	
-	private Long orderId;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="ORDER_ID")
+	private Integer orderId;
+	@OneToOne
+	@JoinColumn(name = "CART_ID")
 	private Cart cart;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "SHIPPING_DETAIL_ID")
 	private ShippingDetail shippingDetail;
 	
 	public Order() {
@@ -18,11 +38,11 @@ public class Order  implements Serializable{
 		this.shippingDetail = new ShippingDetail();
 	}
 
-	public Long getOrderId() {
+	public Integer getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(Long orderId) {
+	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
 

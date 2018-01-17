@@ -2,19 +2,36 @@ package com.packt.webstore.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.springframework.context.annotation.EnableLoadTimeWeaving;
 
+@Entity
+@Table(name = "ADDRESS")
 public class Address implements Serializable{
 
 	private static final long serialVersionUID = -530086768384258062L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="ADDRESS_ID")
+	private Integer addressId;
+	@Column(name="DOOR_NO")
 	private String doorNo;
+	@Column(name="STREET_NAME")
 	private String streetName;
+	@Column(name="AREA_NAME")
 	private String areaName;
+	@Column(name="STATE")
 	private String state;
+	@Column(name="COUNTRY")
 	private String country;
+	@Column(name="ZIP_CODE")
 	private String zipCode;
 	public String getDoorNo() {
 		return doorNo;

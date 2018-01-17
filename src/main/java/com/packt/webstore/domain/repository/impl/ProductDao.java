@@ -9,14 +9,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.domain.repository.ProductRepository;
-import com.packt.webstore.exception.ProductNotFoundException;
 
 @Repository
 public class ProductDao extends AbstractDaoImpl implements ProductRepository {
@@ -73,8 +71,16 @@ public class ProductDao extends AbstractDaoImpl implements ProductRepository {
 	}
 
 	@Override
+	@Transactional
 	public void addProduct(Product product) {
 		getEntityManager().persist(product);
+		getEntityManager().flush();
+	}
+	
+	@Override
+	@Transactional
+	public void updateProduct(Product product) {
+		getEntityManager().merge(product);
 		getEntityManager().flush();
 	}
 	

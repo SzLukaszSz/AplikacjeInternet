@@ -16,5 +16,7 @@ public interface ProductRepository extends AbstractDao {
 
 	Set<Product> getProductsByFilter(Map<String, List<String>> filterParams);
 	
-	void addProduct(Product product);		
+	void addProduct(Product product);
+
+	void updateProduct(Product product);		
 }

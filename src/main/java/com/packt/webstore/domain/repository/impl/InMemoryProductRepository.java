@@ -105,5 +105,10 @@ private List<Product> listOfProducts = new ArrayList<Product>();
 		   listOfProducts.add(product);
 	}
 
+	@Override
+	public void updateProduct(Product product) {
+		
+	}
+
 	
 }

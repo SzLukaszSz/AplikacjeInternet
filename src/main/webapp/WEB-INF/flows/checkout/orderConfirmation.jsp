@@ -83,11 +83,11 @@
 							<tbody>
 								<c:forEach var="cartItem" items="${order.cart.cartItems}">
 									<tr>
-										<td class="col-md-9"><em>${cartItem.value.product.name}</em></td>
+										<td class="col-md-9"><em>${cartItem.product.name}</em></td>
 										<td class="col-md-1" style="text-align: center">
-											${cartItem.value.quantity}</td>
-										<td class="col-md-1 text-center">$${cartItem.value.product.unitPrice}</td>
-										<td class="col-md-1 text-center">$${cartItem.value.totalPrice}</td>
+											${cartItem.quantity}</td>
+										<td class="col-md-1 text-center">$${cartItem.product.unitPrice}</td>
+										<td class="col-md-1 text-center">$${cartItem.totalPrice}</td>
 									</tr>
 								</c:forEach>
 
